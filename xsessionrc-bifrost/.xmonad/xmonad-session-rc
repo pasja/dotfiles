@@ -2,22 +2,22 @@
  
 # Load resources
  
-xrdb -merge .Xresources
+(xrdb -merge .Xresources)
  
 # Set up an icon tray
  
-trayer --edge top --align right --SetDockType true --SetPartialStrut true \
- --expand true --width 10 --transparent true --tint 0x191970 --height 17 &
+(trayer --edge top --align right --SetDockType true --SetPartialStrut true \
+ --expand true --width 10 --transparent true --tint 0x191970 --height 17 &)
 
-xscreensaver -no-splash &
-pasystray &
-/usr/sbin/wpa_gui -t &
-dhcpcd-gtk &
-blueman-applet &
-remmina -i &
+(xscreensaver -no-splash &)
+(pasystray &)
+(/usr/sbin/wpa_gui -t &)
+(dhcpcd-gtk &)
+(blueman-applet &)
+(remmina -i &)
 
 # mouse config
-xbindkeys &
-xinput --set-button-map "Kensington      Kensington Expert Mouse" 1 8 3 4 5 6 7 2 &
+(xbindkeys &)
+(xinput --set-button-map "Kensington      Kensington Expert Mouse" 1 8 3 4 5 6 7 2 &)
 
 # exec xmonad
