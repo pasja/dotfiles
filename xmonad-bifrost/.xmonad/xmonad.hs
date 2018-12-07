@@ -46,8 +46,6 @@ main = do
          [ ("M-s", spawn "xscreensaver-command --lock")
          , ("<Scroll_lock>", spawn "pactl set-sink-mute 0 toggle")
          , ("M-p", spawn "rofi -show run")
-         , ("M-<Print>", spawn "sleep 0.2; maim -s ~/screenshots/$(date +%F-%H%M%S)_maim_cropped.png")
-         , ("<Print>", spawn "maim ~/screenshots/$(date +%F-%H%M%S)_maim_full.png")
          , ("M-a", gridselectWorkspace defaultGSConfig W.view)
          , ("M-x", goToSelected gsconfig')
          , ("M-y", sendMessage ToggleStruts)
