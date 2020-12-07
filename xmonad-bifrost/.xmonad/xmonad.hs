@@ -27,15 +27,15 @@ gsconfig' = def { gs_cellheight = 60, gs_cellwidth = 800 }
 main = do
   replace
   xmproc <- spawnPipe "xmobar"
-  xmonad $ ewmh def
+  xmonad $ ewmhFullscreen $ ewmh def
          { modMask = mod4Mask
          , workspaces = workspaces'
          , terminal = "gnome-terminal"
          , focusFollowsMouse = True
-         , handleEventHook = handleEventHook def <+> fullscreenEventHook
+         , handleEventHook = docksEventHook <+> handleEventHook def
          , manageHook = manageDocks <+> manageHook def
          , layoutHook = avoidStruts $ layoutHook def ||| noBorders Full ||| Grid (16/10)
-         , startupHook = ewmhDesktopsStartup >> setWMName "LG3D"
+         , startupHook = docksStartupHook <+> ewmhDesktopsStartup >> setWMName "LG3D"
          , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc
                         , ppTitle = xmobarColor "green" "" . shorten 80
