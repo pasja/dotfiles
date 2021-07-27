@@ -10,7 +10,7 @@ Config {
                     , Run Date "%A %Y-%m-%d %R" "date" 10
                     , Run StdinReader
 		    , Run Uptime ["-t", "Up: <days>d"] 10
-                    , Run BatteryP ["BAT0"] ["-t", "<acstatus> / <timeleft>", "-L", "10", "-H", "80" , "-l", "red", "-h", "green" , "--", "-O", "Charging", "-o", "Battery: <left>%" ] 300
+                    , Run BatteryP ["BAT0"] ["-t", "<acstatus> / <timeleft>", "-L", "10", "-H", "80" , "-l", "red", "-h", "green", "-a", "notify-send -u critical 'Battery running out!!!!!!'" , "--", "-O", "Charging", "-o", "Battery: <left>%" ] 300
                     , Run Kbd [("hu", "HU"), ("us", "US")]
                     ]
        , sepChar = "%"
