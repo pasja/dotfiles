@@ -337,12 +337,9 @@ fi
 
 # pasja
 
-export TERM=xterm-256color
-export EDITOR='emacsclient -t'
 alias sdig='dig +short'
 
 unalias ag
 
 stty -ixon
 
-PATH=~/bin:$PATH
