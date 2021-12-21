@@ -1,7 +1,9 @@
 #!/bin/bash
  
 # Load resources
- 
+
+source ~/.profile
+
 (xrdb -merge .Xresources)
  
 # Set up an icon tray
