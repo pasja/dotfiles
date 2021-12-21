@@ -343,61 +343,6 @@ alias sdig='dig +short'
 
 unalias ag
 
-alias dp_dev="docker run -ti --rm -v /home/pasja/boss/:/home/dpuser/boss -v /dev/log:/dev/log -v /home/pasja/zwa/projects/support/source/patterndbs:/home/dpuser/patterndbs docker.balabit/support/debug_processor-dev:latest"
-alias dp_docker="docker run -ti --rm=true -v /home/pasja/boss/:/home/dpuser/boss -v /dev/log:/dev/log docker.balabit/support/debug_processor:latest debug_processor.pl"
-alias dp_shell="docker run -ti --rm=true -v /home/pasja/boss/:/home/dpuser/boss -v /dev/log:/dev/log docker.balabit/support/debug_processor:latest bash"
-
 stty -ixon
-
-## from gyu
-alias samu=samu_wrapper
-alias samu_delete_resourcepool=samu_delete_ticket_resourcepool
-alias samu_delete_ticket=samu_delete_ticket_vms
-alias samu_update='docker pull docker.balabit/support/samu_cli'
-
-samu_priv_rp=pasja
- 
-samu_wrapper() {
-    docker run --rm=true -v ~/samu.config:/root/samu.config -t -i docker.balabit/support/samu_cli /samu_cli/bin/samu.py $*
-}
- 
-samu_delete_ticket_vms() {
-    for i in `samu_wrapper vmware ticket --csv | grep $* | cut -d ";" -f3 | sed 's/^[ \t\r\n]*//;s/[ \t\r\n]*$//'` ; do echo "Removing $i"; samu_wrapper vmware vm --powerstatus --type poweroff --moref $i; samu_wrapper vmware vm --delete --moref $i ; done
-    samu_delete_resourcepool $*
-}
- 
-samu_delete_ticket_resourcepool() {
-    for i in `samu_wrapper vmware resourcepool --csv | grep $* | cut -d ";" -f3 | sed 's/^[ \t\r\n]*//;s/[ \t\r\n]*$//'` ; do echo "Removing RP: $i"; samu_wrapper vmware resourcepool --moref $i --delete ; done
-}
-
-samu_vm_for_ticket () {
-    moref=$(samu_wrapper vmware template --csv | grep "^${2};VirtualMachine;" | (export IFS=$'\t\n\r'"; " ; read d d z d; echo $z ) )
-    if [ -z "$moref" ]; then
-	echo "I did not find such template" >&2
-    else
-	echo samu_wrapper vmware vm --clone --ticket $1 --moref $moref
-	docker run --rm=true -v ~/samu.config:/root/samu.config -t -i docker.balabit/support/samu_cli /samu_cli/bin/samu.py vmware vm --clone --ticket $1 --moref $moref
-    fi
-}
-
-#pgyorgy@enterprise:~$ samu_wrapper vmware vm --clone --parent_resourcepool resgroup-53311 --moref vm-55873 --name gyu-scb41 --ticket gyu
-samu_create_private_vm () {
-    vmoref=$(samu_wrapper vmware template --csv | grep "^${1};VirtualMachine;" | (export IFS=$'\t\n\r'"; " ; read d d z d; echo $z ) )
-    rpmoref=$(samu_wrapper vmware resourcepool --csv | grep "^${samu_priv_rp};ResourcePool;" | (export IFS=$'\t\n\r'"; " ; read d d z d; echo $z ) )
-    if [ -z "$vmoref" ]; then
-	echo "I did not find such template" >&2
-    elif [ -z "$rpmoref" ]; then
-	echo "I did not find your resourcepool" >&2
-    else
-	echo samu_wrapper vmware vm --clone --parent_resourcepool $rpmoref --moref $vmoref --ticket $samu_priv_rp ${2:+--name} ${2:+$2}
-	docker run --rm=true -v ~/samu.config:/root/samu.config -t -i docker.balabit/support/samu_cli /samu_cli/bin/samu.py vmware vm --clone --parent_resourcepool $rpmoref --moref $vmoref --ticket $samu_priv_rp ${2:+--name} ${2:+$2}
-    fi
-}
-
-PATH="/home/pasja/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/home/pasja/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/pasja/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/pasja/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/pasja/perl5"; export PERL_MM_OPT;
 
 PATH=~/bin:$PATH
