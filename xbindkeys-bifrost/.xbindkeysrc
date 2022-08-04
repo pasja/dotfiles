@@ -68,10 +68,6 @@
 "/usr/bin/xte 'mouseclick 1' 'mouseclick 1' &"
  b:8 + Release
 
-"/usr/bin/xte 'mouseclick 2' &"
- Mod1+Insert
-
-
 ##################################
 # End of xbindkeys configuration #
 ##################################
