@@ -55,6 +55,7 @@ main = do
          , ("C-M-d", spawn "~/bin/laptop2desktop.sh")
          , ("C-M-l", spawn "~/bin/desktop2laptop.sh")
          , ("C-M-t", spawn "~/bin/tv.sh")
+         , ("M-v", spawn "dunstctl close")
          ]
          `additionalKeys`
          M.toList (planeKeys mod4Mask (Lines 2) Circular)
