@@ -44,7 +44,7 @@ main = do
          }
          `additionalKeysP`
          [ ("M-s", spawn "xscreensaver-command --lock")
-         , ("<Scroll_lock>", spawn "pactl set-sink-mute 0 toggle")
+         , ("<Scroll_lock>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
          , ("M-p", spawn "rofi -show run")
          , ("M-a", gridselectWorkspace def W.view)
          , ("M-x", goToSelected gsconfig')
