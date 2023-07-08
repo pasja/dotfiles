@@ -1,22 +1,22 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 import XMonad
-import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.EwmhDesktops
-import XMonad.Actions.UpdatePointer
-import XMonad.Actions.Plane
 import XMonad.Actions.GridSelect
-import XMonad.Util.Run (spawnPipe)
-import XMonad.Util.Replace
-import XMonad.Util.EZConfig
-import qualified XMonad.StackSet as W
-import XMonad.Layout.NoBorders
+import XMonad.Actions.Plane
+import XMonad.Actions.UpdatePointer
+import XMonad.Actions.WindowBringer
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.SetWMName
 import XMonad.Layout.GridVariants
+import XMonad.Layout.NoBorders
 import XMonad.Prompt
 import XMonad.Prompt.Shell
-import XMonad.Hooks.SetWMName
-import XMonad.Actions.WindowBringer
+import qualified XMonad.StackSet as W
+import XMonad.Util.EZConfig
 import XMonad.Util.Paste
+import XMonad.Util.Replace
+import XMonad.Util.Run (spawnPipe)
 
 import System.IO
 import qualified Data.Map as M
