@@ -1,1 +1,2 @@
 * My personal dotfiles
+Use https://yadm.io/ to deploy the dotfiles to your machine
