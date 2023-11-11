@@ -1,0 +1,22 @@
+Config {
+       font = "xft:Droid Sans Mono-8"
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = TopW L 90
+       , commands = [
+                      Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run MultiCpu ["-t", "Multicpu: <autototal>", "-L", "3", "-H", "50", "-n", "green", "-h", "red"] 10
+                    , Run Swap [] 10
+                    , Run Date "%A %Y-%m-%d %R" "date" 10
+                    , Run StdinReader
+		    , Run Uptime ["-t", "Up: <days>d"] 10
+                    , Run Kbd [("hu", "HU"), ("us", "US")]
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{| %kbd% | %uptime% | %multicpu% | %memory% | <fc=#ee9a00>%date%</fc>"
+       }
+
+-- Local Variables:
+-- mode: haskell
+-- End:
