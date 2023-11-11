@@ -1,0 +1,69 @@
+import XMonad
+import XMonad.Actions.GridSelect
+import XMonad.Actions.Plane
+import XMonad.Actions.UpdatePointer
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
+import XMonad.Layout.GridVariants
+import XMonad.Layout.NoBorders
+import XMonad.Prompt
+import XMonad.Prompt.Shell
+import qualified XMonad.StackSet as W
+import XMonad.Util.EZConfig
+import XMonad.Util.Paste
+import XMonad.Util.Replace
+import XMonad.Util.Run (spawnPipe)
+
+import System.IO
+import qualified Data.Map as M
+import Data.Maybe
+import Control.Monad
+
+workspaces' = ["Web", "Emacs", "Terminal", "Email", "IRC", "Local"]
+
+managehook' = composeAll
+              [className =? "Firefox" --> doShift "Web"
+              , className =? "thunderbird-default" --> doShift "Email"
+              , className =? "Emacs" --> doShift "Emacs"
+              , className =? "mpv" --> doFloat
+              , manageDocks]
+              <+>
+              composeOne
+              [isFullscreen -?> doFullFloat]
+
+main = do
+  -- replace
+  xmproc <- spawnPipe "xmobar"
+  xmonad $ docks . ewmhFullscreen . ewmh $ def 
+         { modMask = mod4Mask
+         , workspaces = workspaces'
+         , terminal = "gnome-terminal"
+         , focusFollowsMouse = True
+         , borderWidth = 1
+         , handleEventHook =  handleEventHook def 
+         , startupHook =  startupHook def
+         , manageHook = managehook' <+> manageHook def
+         , layoutHook = smartBorders $ avoidStruts $ layoutHook def ||| Grid (16/10)
+         , logHook = dynamicLogWithPP xmobarPP
+                        { ppOutput = hPutStrLn xmproc
+                        , ppTitle = xmobarColor "green" "" . shorten 80
+                        } >> updatePointer (0.5, 0.5) (0, 0)
+         }
+         `additionalKeysP`
+         [ ("M-s", spawn "xscreensaver-command --lock")
+         , ("<Scroll_lock>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+         , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+         , ("M-p", spawn "rofi -show run")
+         , ("M-<Print>", spawn "sleep 0.2; scrot -s -e 'mv $f ~/screenshots/'")
+         , ("<Print>", spawn "scrot -e 'mv $f ~/screenshots/'")
+         , ("M-a", gridselectWorkspace def W.view)
+         , ("M-e", goToSelected def)
+         , ("M-y", sendMessage ToggleStruts)
+         -- , ("C-M-o", restart "~/bin/obtoxmd" False)
+         , ("M-o", shellPrompt def)
+         , ("M-i", spawn "~/bin/passmenu")]
+         `additionalKeys`
+         M.toList (planeKeys mod4Mask (Lines 2) Circular)
+
