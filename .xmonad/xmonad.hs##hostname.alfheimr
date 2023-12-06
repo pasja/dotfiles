@@ -30,7 +30,7 @@ main = do
   xmonad $ docks . ewmhFullscreen . ewmh $ def
          { modMask = mod4Mask
          , workspaces = workspaces'
-         , terminal = "gnome-terminal"
+         , terminal = "kitty"
          , focusFollowsMouse = True
          , handleEventHook = handleEventHook def
          , manageHook = manageHook def
