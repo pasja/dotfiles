@@ -24,7 +24,7 @@ remmina -i &
 mpc repeat on &
 
 (xiccd &)
-(picom &)
+# (picom &)
 
 firefox &
 thunderbird &
