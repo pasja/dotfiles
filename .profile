@@ -27,4 +27,4 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 export TERM=xterm-256color
-export EDITOR='emacsclient -t'
+export EDITOR="emacsclient -t"
