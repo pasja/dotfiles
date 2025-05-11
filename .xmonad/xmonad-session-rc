@@ -1,0 +1,43 @@
+#!/bin/bash
+
+## Load resources
+
+# https://wiki.debian.org/EnvironmentVariables#Quick_guide
+# https://wiki.debian.org/LightDM#User_configuration
+
+source ~/.profile
+xrdb -merge .Xresources
+
+## Set up an icon tray
+
+trayer --edge top --align right --SetDockType true --SetPartialStrut true \
+--expand true --width 10 --transparent true --tint 0x191970 --height 17 &
+
+## Tray elements
+
+pasystray &
+numlockx &
+/usr/sbin/wpa_gui -t &
+blueman-applet &
+remmina -i &
+dhcpcd-gtk &
+flameshot &
+
+mpc repeat on &
+
+## Background services
+
+xiccd &
+picom &
+
+## Session programs
+
+firefox &
+thunderbird &
+emacsclient -c &
+
+# Workaround for https://github.com/yshui/picom/issues/1214
+
+xrandr --output DisplayPort-0 --set TearFree on
+
+# exec xmonad
