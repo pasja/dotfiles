@@ -28,3 +28,4 @@ fi
 
 export TERM=xterm-256color
 export EDITOR="emacsclient -t"
+export MOZ_WAKE_LOCK_TYPE=FreeDesktopScreensaver
